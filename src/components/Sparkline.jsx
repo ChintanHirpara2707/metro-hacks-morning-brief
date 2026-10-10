@@ -16,13 +16,13 @@ export default function Sparkline({ values, baseline, w = 132, h = 44, tone = 'v
   const d = values.map((v, i) => `${i === 0 ? 'M' : 'L'}${X(i)},${Y(v)}`).join(' ');
   const lastY = Y(values[values.length - 1]);
   return (
-    <span className="inline-flex flex-col items-end gap-0.5">
-      <svg ref={ref} width={w} height={h - 10} viewBox={`0 0 ${w} ${h - 10}`} role="img" aria-label={`14-day trend, latest ${values[values.length - 1].toLocaleString('en-IN')}`}>
+    <span className="inline-flex w-full flex-col items-stretch gap-0.5 md:w-auto md:items-end">
+      <svg ref={ref} className="spark-svg" width={w} height={h - 10} viewBox={`0 0 ${w} ${h - 10}`} role="img" aria-label={`14-day trend, latest ${values[values.length - 1].toLocaleString('en-IN')}`}>
         {baseline != null && (
           <line x1="3" x2={w - 3} y1={Y(baseline)} y2={Y(baseline)} stroke="var(--muted)" strokeWidth="1" strokeDasharray="4 3" opacity="0.7" />
         )}
         <motion.path
-          d={d} fill="none" stroke={tone} strokeWidth="2" strokeLinecap="round"
+          d={d} fill="none" stroke="var(--spark)" strokeWidth="2" strokeLinecap="round"
           initial={{ pathLength: 0 }}
           animate={inView || reduce ? { pathLength: 1 } : {}}
           transition={{ duration: reduce ? 0 : 0.9, ease: 'easeOut' }}

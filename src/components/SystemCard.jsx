@@ -32,10 +32,10 @@ export default function SystemCard({ system, total, dod, delta }) {
   return (
     <motion.div layout className="card flex flex-col items-center gap-1 px-3 py-4 text-center" transition={{ type: 'spring', stiffness: 380, damping: 32 }}>
       <span className="label-caps">{system}</span>
-      <span className="font-display text-4xl font-semibold tabular-nums" aria-label={`${system} ridership ${fmtInt(total)}`}>
+      <span className="font-display headline-num font-semibold tabular-nums" aria-label={`${system} ridership ${fmtInt(total)}`}>
         {fmtInt(shown)}
       </span>
-      <span className={`pill ${cls}`} aria-label={`Versus yesterday ${word}, ${fmtPct(dod)}`}>
+      <span className={`pill ${cls} max-w-full flex-wrap justify-center text-center`} aria-label={`Versus yesterday ${word}, ${fmtPct(dod)}`}>
         <Icon size={13} strokeWidth={2.5} aria-hidden="true" />
         {fmtPct(dod)} vs yesterday · {fmtDelta(delta)}
       </span>

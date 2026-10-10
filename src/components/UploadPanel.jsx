@@ -44,7 +44,7 @@ export default function UploadPanel({ groups, uploadMsg, onFile, onTemplate, isS
       </button>
 
       {quality && (
-        <div className="mb-1 rounded-lg p-2 text-xs" style={{ background: 'var(--bg)' }} aria-label="Data quality checks">
+        <div className="mb-1 rounded-lg p-2 text-xs" style={{ background: 'var(--raised)' }} aria-label="Data quality checks">
           <p style={{ color: 'var(--ink-soft)' }}>
             Rows read — metro {c.metro} · outages {c.metroOutages} · BRTS {c.brts} · incidents {c.brtsIncidents} · AMTS {c.amts} · cancellations {c.amtsCancelled} · context {c.context}
             {quality.range && <> · range {fmtD(quality.range.from)} – {fmtDate(quality.range.to)} ({quality.days} days)</>}
@@ -65,7 +65,7 @@ export default function UploadPanel({ groups, uploadMsg, onFile, onTemplate, isS
         </div>
       )}
 
-      <div className="grid grid-cols-1 gap-2 py-1 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-2 py-1 md:grid-cols-2">
         {groups.map((g) => (
           <div key={g.title} className="rounded-lg border p-2" style={{ borderColor: 'var(--line)' }}>
             <p className="label-caps mb-1">{g.title}</p>
@@ -74,20 +74,22 @@ export default function UploadPanel({ groups, uploadMsg, onFile, onTemplate, isS
               const msg = uploadMsg[key];
               const ok = msg?.startsWith('Loaded');
               return (
-                <div key={key} className="flex flex-wrap items-center gap-2 border-t py-1.5 text-xs" style={{ borderColor: 'var(--line)' }}>
+                <div key={key} className="flex flex-col gap-2 border-t py-2 text-xs sm:flex-row sm:flex-wrap sm:items-center" style={{ borderColor: 'var(--line)' }}>
                   <div className="min-w-0 flex-1">
-                    <code className="rounded px-1" style={{ background: 'var(--bg)' }}>{f.file}</code>
-                    <span className="block truncate font-mono" style={{ color: 'var(--ink-soft)' }}>{f.cols}</span>
+                    <code className="rounded px-1" style={{ background: 'var(--raised)' }}>{f.file}</code>
+                    <span className="mt-0.5 block font-mono break-all" style={{ color: 'var(--ink-soft)' }}>{f.cols}</span>
                   </div>
+                  <div className="grid grid-cols-2 gap-2 sm:flex">
                   <motion.label whileHover={reduce ? {} : { scale: 1.02 }} whileTap={reduce ? {} : { scale: 0.98 }} transition={spring}
-                    className="btn btn-ghost !px-2 !py-1 !text-xs">
+                    className="btn btn-ghost w-full !px-2 !text-xs sm:w-auto">
                     <Upload size={13} aria-hidden="true" />Upload
                     <input type="file" accept=".csv" hidden onChange={(e) => onFile(key, e.target.files[0])} aria-label={`Upload ${f.file}`} />
                   </motion.label>
                   <motion.button whileHover={reduce ? {} : { scale: 1.02 }} whileTap={reduce ? {} : { scale: 0.98 }} transition={spring}
-                    className="btn btn-ghost !px-2 !py-1 !text-xs" onClick={() => onTemplate(key)} aria-label={`Download template ${f.file}`}>
+                    className="btn btn-ghost w-full !px-2 !text-xs sm:w-auto" onClick={() => onTemplate(key)} aria-label={`Download template ${f.file}`}>
                     <FileDown size={13} aria-hidden="true" />Template
                   </motion.button>
+                  </div>
                   {msg && <p role={ok ? 'status' : 'alert'} className="w-full text-xs" style={{ color: ok ? 'var(--normal)' : 'var(--critical)' }}>{msg}</p>}
                 </div>
               );

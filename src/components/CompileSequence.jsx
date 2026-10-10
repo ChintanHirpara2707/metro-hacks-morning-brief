@@ -53,7 +53,7 @@ export default function CompileSequence({ onDone }) {
         })}
       </div>
       <span className="inline-flex items-center gap-2 font-display text-3xl font-semibold tabular-nums" aria-hidden="true">
-        <Timer size={22} style={{ color: 'var(--accent)' }} />{elapsed.toFixed(1)} s
+        <Timer size={22} style={{ color: 'var(--ink-soft)' }} />{elapsed.toFixed(1)} s
       </span>
       <span className="text-sm" style={{ color: 'var(--muted)' }}>Manual process: about 4 hours</span>
     </motion.div>

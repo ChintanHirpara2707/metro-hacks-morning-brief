@@ -33,16 +33,16 @@ export default function ExceptionCard({ ex, index = 0, fare = 25 }) {
       <button
         type="button" onClick={() => setOpen((o) => !o)}
         aria-expanded={open} aria-controls={evId}
-        className="grid w-full cursor-pointer grid-cols-[1fr_auto] items-start gap-3 p-3 text-left sm:grid-cols-[1fr_auto_auto] sm:items-center sm:p-4"
+        className="grid w-full cursor-pointer grid-cols-1 items-start gap-3 p-3 text-left sm:p-4 md:grid-cols-[minmax(0,1fr)_auto_auto] md:items-center"
       >
-        <span>
+        <span className="min-w-0">
           <span className="flex flex-wrap items-center gap-2">
             <span className={`pill ${s.cls}`}>
               <s.Icon size={13} strokeWidth={2.5} aria-hidden="true" />{s.label}
             </span>
             <span className="label-caps">{ex.system}</span>
             <span className="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[0.7rem] font-bold tabular-nums"
-              style={{ background: 'var(--bg)', color: impact < 0 ? 'var(--critical)' : 'var(--normal)' }}
+              style={{ background: 'var(--raised)', color: impact < 0 ? 'var(--critical)' : 'var(--normal)' }}
               title={`Estimated revenue impact at ₹${fare} average fare`}>
               <IndianRupee size={11} aria-hidden="true" />{fmtINR(impact)}
             </span>
@@ -64,14 +64,14 @@ export default function ExceptionCard({ ex, index = 0, fare = 25 }) {
             </span>
           )}
           <span className="mt-1.5 flex items-start gap-1.5 text-[0.8rem] leading-snug" style={{ color: 'var(--ink-soft)' }}>
-            <Lightbulb size={14} className="mt-0.5 shrink-0" style={{ color: 'var(--accent)' }} aria-hidden="true" />
+            <Lightbulb size={14} className="mt-0.5 shrink-0" style={{ color: 'var(--ink-soft)' }} aria-hidden="true" />
             <span><strong>Suggestion:</strong> {suggestedAction(ex)}</span>
           </span>
         </span>
         <Sparkline values={ex.spark} baseline={ex.baseline} tone={s.tone} />
         <motion.span
           animate={{ rotate: open ? 180 : 0 }} transition={spring}
-          className="ev-toggle hidden items-center gap-1 text-xs font-semibold sm:inline-flex"
+          className="ev-toggle inline-flex w-full items-center justify-center gap-1 py-1 text-xs font-semibold md:w-auto"
           style={{ color: 'var(--muted)' }}
         >
           <ChevronDown size={16} aria-hidden="true" />{open ? 'Hide' : 'Details'}
@@ -85,7 +85,7 @@ export default function ExceptionCard({ ex, index = 0, fare = 25 }) {
             exit={{ height: 0, opacity: 0 }} transition={spring}
             className="ev-list"
           >
-            <ul className="mx-3 mb-3 space-y-1 rounded-lg p-3 text-sm sm:mx-4" style={{ background: 'var(--bg)' }}>
+            <ul className="mx-3 mb-3 space-y-1 rounded-lg p-3 text-sm sm:mx-4" style={{ background: 'var(--raised)' }}>
               {ex.evidence.length === 0
                 ? <li>No supporting evidence on this date — flagged on movement alone.</li>
                 : ex.evidence.map((v, i) => <li key={i}>↳ {v}</li>)}

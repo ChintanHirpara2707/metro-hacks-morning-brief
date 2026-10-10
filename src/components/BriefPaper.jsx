@@ -65,27 +65,27 @@ export default function BriefPaper({ briefKey, hl, ex, summary, watch, ctx, brie
         aria-label={`Morning brief for ${fmtDate(briefDate)}`}
       >
         {/* masthead */}
-        <div className="flex flex-wrap justify-between gap-3 border-b-2 pb-3" style={{ borderColor: 'var(--ink)' }}>
-          <div>
+        <div className="flex flex-col gap-3 border-b-2 pb-3 lg:flex-row lg:justify-between" style={{ borderColor: 'var(--ink)' }}>
+          <div className="min-w-0">
             <p className="label-caps">GMRC · BRTS · AMTS — Daily MIS Brief</p>
-            <h2 className="font-display mt-0.5 text-2xl font-semibold sm:text-[2rem]">Morning Brief — {fmtDate(briefDate)}</h2>
+            <h2 className="font-display brief-title mt-0.5 font-semibold">Morning Brief — {fmtDate(briefDate)}</h2>
             <p className="mt-1 text-xs sm:text-[0.8rem]" style={{ color: 'var(--muted)' }}>
               Baseline: same weekday, prior 4 weeks · Threshold ±{threshold}% · {isSample ? 'Sample / assumed data' : 'Uploaded data'}
             </p>
           </div>
-          <ul className="flex flex-col gap-1 text-[0.8rem]" aria-label="Day context">
-            <li className="inline-flex items-center gap-1.5"><CloudRain size={15} style={{ color: 'var(--accent)' }} aria-hidden="true" />Rain <strong>{ctx?.rainfallMm ?? 0} mm</strong></li>
+          <ul className="flex w-full flex-col gap-1 text-[0.8rem] lg:w-auto" aria-label="Day context">
+            <li className="inline-flex items-center gap-1.5"><CloudRain size={15} style={{ color: 'var(--ink-soft)' }} aria-hidden="true" />Rain <strong>{ctx?.rainfallMm ?? 0} mm</strong></li>
             <li className="inline-flex items-center gap-1.5">
               {ctx?.holiday ? <><CalendarOff size={15} style={{ color: 'var(--watch)' }} aria-hidden="true" />{ctx.holiday}</> : <span style={{ color: 'var(--muted)' }}>No holiday</span>}
             </li>
-            <li className="inline-flex max-w-[260px] items-start gap-1.5">
-              {ctx?.event ? <><PartyPopper size={15} className="mt-0.5 shrink-0" style={{ color: 'var(--accent)' }} aria-hidden="true" /><span>{ctx.event}</span></> : <span style={{ color: 'var(--muted)' }}>No major event</span>}
+            <li className="inline-flex w-full items-start gap-1.5 lg:max-w-[260px]">
+              {ctx?.event ? <><PartyPopper size={15} className="mt-0.5 shrink-0" style={{ color: 'var(--ink-soft)' }} aria-hidden="true" /><span>{ctx.event}</span></> : <span style={{ color: 'var(--muted)' }}>No major event</span>}
             </li>
           </ul>
         </div>
 
         {/* exec summary + revenue total + share */}
-        <p className="mt-3 rounded-r-lg border-l-4 p-3 text-sm leading-relaxed sm:text-[0.95rem]" style={{ background: 'var(--accent-soft)', borderColor: 'var(--accent)' }}>
+        <p className="mt-3 max-w-prose rounded-r-lg border-l-4 p-3 text-base leading-relaxed sm:text-[0.95rem]" style={{ background: 'var(--accent-soft)', borderColor: 'var(--accent)' }}>
           {summary}
         </p>
         <div className="mt-2 flex flex-wrap items-center gap-2">
@@ -101,7 +101,7 @@ export default function BriefPaper({ briefKey, hl, ex, summary, watch, ctx, brie
         </div>
 
         {/* headline numbers */}
-        <div className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-3" role="list" aria-label="Headline ridership">
+        <div className="mt-3 grid grid-cols-1 gap-2 md:grid-cols-3" role="list" aria-label="Headline ridership">
           <SystemCard system="Metro" total={hl.metro.total} dod={hl.metro.dod} delta={hl.metro.delta} />
           <SystemCard system="BRTS" total={hl.brts.total} dod={hl.brts.dod} delta={hl.brts.delta} />
           <SystemCard system="AMTS" total={hl.amts.total} dod={hl.amts.dod} delta={hl.amts.delta} />
@@ -123,12 +123,12 @@ export default function BriefPaper({ briefKey, hl, ex, summary, watch, ctx, brie
 
         {/* watch today */}
         <h3 className="label-caps mt-4"><Eye size={13} className="mr-1 inline" aria-hidden="true" />Watch today</h3>
-        <ul className="mt-1 space-y-1 text-[0.83rem] leading-snug sm:text-sm">
+        <ul className="mt-1 space-y-1.5 text-[0.83rem] leading-relaxed break-words sm:text-sm">
           {watch.map((w, i) => {
             const Icon = WATCH_ICON[w.kind] || CloudSun;
             return (
               <li key={i} className="flex items-start gap-2">
-                <Icon size={15} className="mt-0.5 shrink-0" style={{ color: 'var(--accent)' }} aria-hidden="true" />
+                <Icon size={15} className="mt-0.5 shrink-0" style={{ color: 'var(--ink-soft)' }} aria-hidden="true" />
                 <span>{w.text}</span>
               </li>
             );
