@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+/* ── Control-room meets editorial briefing ── */
+:root {
+  --bg: #f6f3ec;            /* warm off-white */
+  --paper: #fffdf8;
+  --ink: #1c2420;           /* deep ink */
+  --ink-soft: #4a5450;
+  --muted: #6f7873;
+  --line: #e3ddd0;
+  --accent: #0e5f5b;        /* deep teal */
+  --accent-ink: #0a4643;
+  --accent-soft: #e2efec;
+  --critical: #b3261e;
+  --critical-bg: #fbecea;
+  --watch: #8a5a00;
+  --watch-bg: #faf3e2;
+  --normal: #1d6b32;
+  --normal-bg: #e9f4ec;
+  --shadow: 0 1px 2px rgb(28 36 32 / 0.06), 0 8px 24px rgb(28 36 32 / 0.08);
+  --r: 12px;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121715;
+    --paper: #1a201d;
+    --ink: #eef2ee;
+    --ink-soft: #c3ccc7;
+    --muted: #97a19b;
+    --line: #2c3531;
+    --accent: #5ec4b6;
+    --accent-ink: #c9efe9;
+    --accent-soft: #1e302c;
+    --critical: #ff8a80;
+    --critical-bg: #3a1f1c;
+    --watch: #e8b84b;
+    --watch-bg: #38300f;
+    --normal: #7ed492;
+    --normal-bg: #16291b;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px rgb(0 0 0 / 0.35);
+  }
+}
+
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+.font-display { font-family: var(--font-display); }
+
+.label-caps {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.paper {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow);
+}
+
+.card {
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: 0 1px 2px rgb(28 36 32 / 0.05);
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-weight: 600; font-size: 0.875rem;
+  border-radius: 10px; padding: 0.55rem 1rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+.btn-primary { background: var(--accent); color: #fff; }
+@media (prefers-color-scheme: dark) { .btn-primary { color: #0c1512; } }
+.btn-ghost { background: transparent; border-color: var(--line); color: var(--ink); }
+
+.field {
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--line); border-radius: 10px;
+  padding: 0.5rem 0.65rem; font-size: 0.875rem; font-family: inherit;
+}
+input[type="range"].slider { accent-color: var(--accent); }
+
+/* visible focus everywhere */
+:where(a, button, input, summary, [tabindex]):focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* status pills: colour + icon + text, never colour alone */
+.pill { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; border-radius: 999px; padding: 0.15rem 0.6rem; }
+.pill-critical { background: var(--critical-bg); color: var(--critical); border: 1px solid currentColor; }
+.pill-watch { background: var(--watch-bg); color: var(--watch); border: 1px solid currentColor; }
+.pill-normal { background: var(--normal-bg); color: var(--normal); border: 1px solid currentColor; }
+
+/* exception card left rail */
+.rail-critical { border-left: 5px solid var(--critical); }
+.rail-watch { border-left: 5px solid var(--watch); }
+
+/* evidence tags: strongest evidence visible on the card */
+.ev-tag {
+  display: inline-block; max-width: 100%;
+  font-size: 0.7rem; font-weight: 600; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+  background: var(--bg); color: var(--ink-soft);
+  border: 1px dashed var(--line); border-radius: 999px;
+  padding: 0.1rem 0.55rem;
+}
+
+/* evidence expander (screen): animated via motion; base collapsed style */
+.ev-list { overflow: hidden; }
+
+/* ── print: one A4 page, no animation, everything expanded ── */
+@media print {
+  @page { size: A4; margin: 9mm 10mm; }
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .paper, .card { box-shadow: none !important; border-color: #ccc !important; }
+  * { animation: none !important; transition: none !important; }
+  .ev-list { max-height: none !important; height: auto !important; opacity: 1 !important; overflow: visible !important; }
+  .ev-toggle { display: none !important; }
+  .print-compact { padding: 0 !important; margin: 0 !important; max-width: none !important; }
+  .print-sm { font-size: 11px !important; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
